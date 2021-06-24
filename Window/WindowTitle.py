@@ -32,4 +32,4 @@ def get_window_title():
             title.append(buff.value)
             return True
     EnumWindows(EnumWindowsProc(foreach_window), 0)
-    print (title)
+    return title
