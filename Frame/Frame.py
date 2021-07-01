@@ -62,9 +62,9 @@ class Frame:
         self.set_interval_label.grid(row=7, column=1)
 
         # スクリーンショットボタン
-        scr = Screenshot.Screenshot()
         self.screenshot_button = ttk.Button(self.frame, text='スクリーンショット開始', command=self.pushed_execute_screenshot)
         self.screenshot_button.grid(row=8,column=0)
+
         # スクリーンショット
     
         # 保存場所指定    
