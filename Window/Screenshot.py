@@ -28,9 +28,11 @@ class Screenshot:
                     # 一度元のサイズで保存
                     ImageGrab.grab().save(self.save_dir + '/' +str(self.screenshots_counter) +'.png')
                     
-                    # リサイズ
+                    # リサイズ （横 > 縦前提）
                     img = Image.open(self.save_dir + '/' +str(self.screenshots_counter) +'.png')
-                    img_resize = img.resize((256,256))
+                    width = round(img.width * 256 / img.height)
+                    img_resize = img.resize((width,256))
+
                     img_resize.save(self.save_dir + '/' +str(self.screenshots_counter) +'.png')
 
                     print('\r' + str(self.screenshots_counter) + '枚撮った', end='')

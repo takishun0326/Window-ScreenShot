@@ -21,6 +21,7 @@ class Frame:
     def pushed_start_screenshot(self):
         thread1 = threading.Thread(target=self.start_screenshot)  
         thread1.start()
+        self.screenshot_finish['state'] =  tk.NORMAL
 
     def start_screenshot(self):
         try:
@@ -69,7 +70,7 @@ class Frame:
 
         # スクリーンショットボタン開始＆終了
         self.screenshot_start = tk.Button(self.frame, text="開始", command=self.pushed_start_screenshot, font=("MSゴシック","11", "bold"),height=2, width=10, relief=SOLID)
-        self.screenshot_finish = tk.Button(self.frame, text="終了", command=self.pushed_finish_screenshot, font=("MSゴシック", "11", "bold"),height=2, width=10, relief=SOLID)
+        self.screenshot_finish = tk.Button(self.frame, text="終了", command=self.pushed_finish_screenshot, font=("MSゴシック", "11", "bold"),height=2, width=10, relief=SOLID, state=tk.DISABLED)
   
 
 
