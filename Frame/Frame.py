@@ -1,17 +1,13 @@
 import tkinter as tk
-from tkinter import ttk
 from tkinter import *
-from Window import WindowTitle
-from Window import Screenshot
+
 import threading
 import subprocess
 
-class Frame:
+from Window import Screenshot
 
-    def show_selection(self):
-        for i in self.listbox.curselection():
-            self.current_window_name = str(self.listbox.get(i))
-            self.current_window['text'] = self.current_window_name + '　　を選択中'
+
+class Frame:
     
     def pushed_execute_screenshot(self):
         thread1 = threading.Thread(target=self.execute_screenshot)  
@@ -29,30 +25,7 @@ class Frame:
         # make tab
         self.frame = ttk.Frame(main_win)
         self.frame.grid()
-                
-        windows = WindowTitle.get_window_title()
-        var = tk.StringVar(value=windows)
-        self.listbox = tk.Listbox(self.frame, listvariable=var, height=10, width=80)
 
-        self.listbox.bind('<<ListboxSelect>>', lambda e: self.show_selection())
-        self.listbox.grid(row=0,column=0)
-
-            # Scrollbar
-        scrollbar = ttk.Scrollbar(
-            self.frame,
-            orient=VERTICAL,
-            command=self.listbox.yview)
-        self.listbox['yscrollcommand'] = scrollbar.set
-        scrollbar.grid(row=0, column=1, sticky=(N, S))
-
-        # 設定ボタン
-        self.title_select_button = ttk.Button(self.frame, text='設定', command=lambda: self.show_selection())
-        self.title_select_button.grid(row=2, column=0)
-
-        # 選択中のウィンドウ名
-        self.current_window_name=''
-        self.current_window = ttk.Label(self.frame, text='未設定')
-        self.current_window.grid(row=5, column = 0)
 
         # n秒間に1回スクリーンショットをとるか
         self.set_interval_second = tk.DoubleVar(value=10.0)
