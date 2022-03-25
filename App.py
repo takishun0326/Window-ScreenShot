@@ -1,7 +1,6 @@
 import sys
 import tkinter as tk
 from tkinter import messagebox
-from Window import Screenshot
 from Frame import Frame
 
 if __name__ == '__main__':

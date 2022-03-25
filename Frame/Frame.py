@@ -19,9 +19,11 @@ class Frame:
     
     # 開始
     def pushed_start_screenshot(self):
+        Screenshot.Handlecsv().write_is_start(True)
         thread1 = threading.Thread(target=self.start_screenshot)  
         thread1.start()
         self.screenshot_finish['state'] =  tk.NORMAL
+
 
     def start_screenshot(self):
         try:
@@ -31,6 +33,7 @@ class Frame:
 
     # 終了
     def pushed_finish_screenshot(self):
+        Screenshot.Handlecsv().write_is_start(False)
         self.main_win.destroy()
 
 
