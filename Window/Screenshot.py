@@ -12,9 +12,10 @@ class Screenshot:
             self.is_take_screenshots = False            
 
 
-        def take_screenshot_enable(self,set_interval_second):
-            print('interval: ' + str(set_interval_second))
-            self.interval_second = set_interval_second
+        def take_screenshot_enable(self,interval_second, times, dir):
+            print('interval: ' + str(interval_second) + '  times:  ' + str(times))
+            self.interval_second = interval_second / times
+            self.save_dir = dir
             self.is_take_screenshots = True
 
         def take_screenshot(self):
@@ -23,10 +24,15 @@ class Screenshot:
                 if time.perf_counter() - self.last_time >= self.interval_second:
                     self.screenshots_counter += 1
                     self.last_time = time.perf_counter()
+                    
+                    # 一度元のサイズで保存
+                    ImageGrab.grab().save(self.save_dir + '/' +str(self.screenshots_counter) +'.png')
+                    
+                    # リサイズ
+                    img = Image.open(self.save_dir + '/' +str(self.screenshots_counter) +'.png')
+                    img_resize = img.resize((256,256))
+                    img_resize.save(self.save_dir + '/' +str(self.screenshots_counter) +'.png')
 
-                    ImageGrab.grab().save('imgs/' + str(self.screenshots_counter) +'.png')
-                    # img = self.WindowCapture(title)
-                    # Image.fromarray(img).save('imgs/' + str(self.screenshots_counter) +'.png')
                     print('\r' + str(self.screenshots_counter) + '枚撮った', end='')
                     
 
@@ -39,7 +45,8 @@ if __name__ == '__main__':
 
     scr = Screenshot()
 
-    scr.take_screenshot_enable(float(args[1]))    
+    print(args)
+    scr.take_screenshot_enable(float(args[1]), float(args[2]), str(args[3]))    
 
     while(1):
         scr.take_screenshot()

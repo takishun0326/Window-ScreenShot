@@ -1,31 +1,43 @@
 import tkinter as tk
-from tkinter import ttk
-from tkinter import filedialog
+from tkinter import ttk, filedialog
 from tkinter import *
 
 import threading
 import subprocess
+import os, sys
 
 from Window import Screenshot
 
 
 class Frame:
+
+    # フォルダ指定の関数
+    def dirdialog_clicked(self):
+        iDir = os.path.abspath(os.path.dirname(__file__))
+        iDirPath = filedialog.askdirectory(initialdir = iDir)
+        self.entry1.set(iDirPath)
     
-    def pushed_execute_screenshot(self):
-        thread1 = threading.Thread(target=self.execute_screenshot)  
+    # 開始
+    def pushed_start_screenshot(self):
+        thread1 = threading.Thread(target=self.start_screenshot)  
         thread1.start()
 
-    def execute_screenshot(self):
+    def start_screenshot(self):
         try:
-            res = subprocess.check_call('python Window/Screenshot.py ' + str(self.set_interval_second_label.get()) + ' ' + str(self.current_window_name))
+            res = subprocess.check_call('python Window/Screenshot.py ' + str(self.interval_second_label.get()) + ' ' + str(self.screenshot_times_label.get()) + ' ' + str(self.entry1.get()))
         except:
             print ('Error')
+
+    # 終了
+    def pushed_finish_screenshot(self):
+        self.main_win.destroy()
 
 
     def __init__(self, main_win):
         
+        self.main_win = main_win
         # make Frames
-        self.frame = ttk.Frame(main_win, padding=10)
+        self.frame = ttk.Frame(self.main_win, padding=10)
         
 
         ###################         Frame 1         #####################
@@ -38,7 +50,7 @@ class Frame:
         self.IDirEntry = ttk.Entry(self.frame, textvariable=self.entry1, width=30)
 
         # 「フォルダ参照」ボタンの作成
-        self.IDirButton = ttk.Button(self.frame, text="参照", )#command=dirdialog_clicked)
+        self.IDirButton = ttk.Button(self.frame, text="参照", command=self.dirdialog_clicked)
 
 
         ###################         Frame 2         #####################
@@ -56,8 +68,8 @@ class Frame:
         ###################         Frame 3         #####################
 
         # スクリーンショットボタン開始＆終了
-        self.screenshot_start = tk.Button(self.frame, text="開始", command=self.pushed_execute_screenshot, font=("MSゴシック","11", "bold"),height=2, width=10, relief=SOLID)
-        self.screenshot_finish = tk.Button(self.frame, text="終了", font=("MSゴシック", "11", "bold"),height=2, width=10, relief=SOLID)
+        self.screenshot_start = tk.Button(self.frame, text="開始", command=self.pushed_start_screenshot, font=("MSゴシック","11", "bold"),height=2, width=10, relief=SOLID)
+        self.screenshot_finish = tk.Button(self.frame, text="終了", command=self.pushed_finish_screenshot, font=("MSゴシック", "11", "bold"),height=2, width=10, relief=SOLID)
   
 
 

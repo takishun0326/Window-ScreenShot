@@ -8,7 +8,7 @@ if __name__ == '__main__':
     
     main_win = tk.Tk()
     main_win.title('自動スクリーンショット')
-    main_win.geometry('700x600')
+    main_win.geometry('350x190')
     #print(GetWindowText(GetForegroundWindow()))
     
     frame = Frame.Frame(main_win)
